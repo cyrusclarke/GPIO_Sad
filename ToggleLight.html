@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<style>
+body {
+    text-align: center;
+    font-size: 40px;
+    padding-top:50px;
+}
+
+.btn3d {
+    position:relative;
+    display: inline-block;
+    top: -6px;
+    border:0;
+     transition: all 40ms linear;
+     margin-top:100px;
+     margin-bottom:10px;
+     margin-left:20px;
+     margin-right:20px;
+     width: 500px;
+     height:200px;
+     font-size: 100px;
+     color: #000000 ;
+
+}
+.btn3d:active:focus,
+.btn3d:focus:hover,
+.btn3d:focus {
+    -moz-outline-style:none;
+         outline:medium none;
+}
+.btn3d:active, .btn3d.active {
+    top:2px;
+}
+.btn3d.btn-white {
+    color: #666666;
+    box-shadow:0 0 0 1px #ebebeb inset, 0 0 0 2px rgba(255,255,255,0.10) inset, 0 8px 0 0 #f5f5f5, 0 8px 8px 1px rgba(0,0,0,.2);
+    background-color:#fff;
+}
+.btn3d.btn-white:active, .btn3d.btn-white.active {
+    color: #666666;
+    box-shadow:0 0 0 1px #ebebeb inset, 0 0 0 1px rgba(255,255,255,0.15) inset, 0 1px 3px 1px rgba(0,0,0,.1);
+    background-color:#fff;
+}   
+</style>
+
+<body>
+	Welcome to the page of giant sad buttons<br>
+    <button type="button" class="btn3d btn btn-white btn-lg" onclick="toggleLight(this)" id="on">SAD</button>
+    <button type="button" class="btn3d btn btn-white btn-lg" onclick="toggleLight(this)" id="off"style='background-color: #ec528d';>NOT SAD</button>
+</body>
+
+<!-- Include the latest Ably Library -->
+<script src="https://cdn.ably.io/lib/ably.min-1.js"></script>
+
+<script type="text/javascript">
+
+    var realtime = new Ably.Realtime({ key: 'n9lhCw.VpHOEQ:yarWasjrblXM8ktr' });
+    var channel = realtime.channels.get("Sandbox");
+    /* Publish a message when the button is pressed */
+
+    function toggleLight(elem) {
+        var state;
+        if(elem.id==="on")
+            state="on";
+        else if(elem.id==="off")
+            state="off";
+
+        channel.publish("update", { "lightstate": state });
+    }
+
+</script>
+</html>
